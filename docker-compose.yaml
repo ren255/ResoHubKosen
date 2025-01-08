@@ -1,0 +1,41 @@
+services:
+  app:
+    build:
+      context: ./docker/app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./docker/app:/usr/src/app
+      - /usr/src/app/node_modules
+      - ./prisma:/usr/src/app/prisma
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: ${DATABASE_URL}
+    command: npm run dev -- --host
+    networks:
+      default:
+    env_file:
+      - .env
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+    volumes:
+      - ./docker/db:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env
+    networks:
+      default:
+
+volumes:
+  db_data:
+
+networks:
+  default:
