@@ -18,10 +18,10 @@ services:
     depends_on:
       - db
     networks:
-      - rejume_network
+      - develop_network
 
   db:
-    image: mysql:8.0
+    image: mysql:8.4
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_USER: ${DB_USER}
@@ -34,11 +34,11 @@ services:
     env_file:
       - .env
     networks:
-      - rejume_network
+      - develop_network
 
 volumes:
   mysql_data:
 
 networks:
-  rejume_network:
+  develop_network:
     driver: bridge
