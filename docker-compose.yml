@@ -1,22 +1,24 @@
 services:
   app:
-    build:
-      context: ./docker/app
+    build: 
+      context: ./
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+      - "5556:5556"
+      - "8002:8002"
     volumes:
-      - ./docker/app:/usr/src/app
+      - ./:/usr/src/app
       - /usr/src/app/node_modules
-      - ./prisma:/usr/src/app/prisma
     environment:
       NODE_ENV: development
       DATABASE_URL: ${DATABASE_URL}
-    command: npm run dev -- --host
-    networks:
-      default:
     env_file:
       - .env
+    depends_on:
+      - db
+    networks:
+      - rejume_network
 
   db:
     image: mysql:8.0
@@ -26,16 +28,17 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DATABASE}
     volumes:
-      - ./docker/db:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
     ports:
       - "3306:3306"
     env_file:
       - .env
     networks:
-      default:
+      - rejume_network
 
 volumes:
-  db_data:
+  mysql_data:
 
 networks:
-  default:
+  rejume_network:
+    driver: bridge
