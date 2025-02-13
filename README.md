@@ -14,6 +14,11 @@ docker desk top を開いた後以下を実行します。
 docker-compose up
 ```
 
+dockerのコンテナログをターミナルに非表示にするには以下を実行します。
+```bash
+docker-compose up -d
+```
+
 ### 2. 必要なパッケージをインストールする
 
 依存パッケージをインストールします。別のターミナルを開いて以下を実行してください。
@@ -43,6 +48,11 @@ docker-compose start
 
 ```bash
 docker-compose stop
+```
+
+### コンテナを削除
+```bash
+docker-compose down
 ```
 
 # dockerを使わないなら
@@ -85,3 +95,43 @@ Make sure to deploy the output of `npm run build`
 ## Styling
 
 This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+
+## Prismaの変更を反映させる手順
+
+schema.prismaを変更した後、以下を実行してください。
+
+### dockerコンテナに反映させる場合
+
+マイグレーションを作成し、データベースに反映させてください。
+
+```bash
+docker-compose exec app npx prisma migrate dev 
+```
+
+### dockerを使わない場合
+```bash
+npx prisma migrate dev 
+```
+
+### ※もし、shadow_databaseを作るのに権限がありませんみたいなことを言われた場合。
+shareing_rejume-db-1に接続してください。
+```bash
+docker exec -it shareing_rejume-db-1 bash
+```
+
+shareing_rejume-db-1コンテナに入った後、mysqlに接続してください。
+```bash
+mysql -u root -p
+```
+
+その後、以下を実行してください。
+```bash
+GRANT ALL PRIVILEGES ON . TO 'rejume_user'@'%';
+FLUSH PRIVILEGES;
+
+exit
+```
+権限を確認したい場合、`FLUSH PRIVILEGES;`と`exit`の間に以下を実行してください。
+```bash
+SHOW GRANTS FOR 'rejume_user'@'%';
+```
