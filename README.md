@@ -5,6 +5,7 @@
 ![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6.svg?logo=typescript&style=flat&logoColor=white)
 ![Prisma](https://img.shields.io/badge/-Prisma-2D3748.svg?logo=prisma&style=flat&logoColor=white)
 ![MySQL](https://img.shields.io/badge/-MySQL-4479A1.svg?logo=mysql&style=flat&logoColor=white)
+![Docker](https://img.shields.io/badge/-Docker-2496ED.svg?logo=docker&style=flat&logoColor=white)
 
 # 初回起動方法
 ### 1. Dockerコンテナを立ち上げる
