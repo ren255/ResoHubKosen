@@ -1,3 +1,11 @@
+# 仕様技術
+![Node.js](https://img.shields.io/badge/-Node.js-339933.svg?logo=Node.js&style=flat&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/-Tailwind%20CSS-38B2AC.svg?logo=tailwind-css&style=flat&logoColor=white)
+![React](https://img.shields.io/badge/-React-61DAFB.svg?logo=react&style=flat&logoColor=black)
+![TypeScript](https://img.shields.io/badge/-TypeScript-3178C6.svg?logo=typescript&style=flat&logoColor=white)
+![Prisma](https://img.shields.io/badge/-Prisma-2D3748.svg?logo=prisma&style=flat&logoColor=white)
+![MySQL](https://img.shields.io/badge/-MySQL-4479A1.svg?logo=mysql&style=flat&logoColor=white)
+
 # 初回起動方法
 ### 1. Dockerコンテナを立ち上げる
 docker desk top を開いた後以下を実行します。
