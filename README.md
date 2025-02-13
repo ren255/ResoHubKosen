@@ -1,4 +1,42 @@
-# Welcome to Remix!
+# 初回起動方法
+### 1. Dockerコンテナを立ち上げる
+docker desk top を開いた後以下を実行します。
+```bash
+docker-compose up
+```
+
+### 2. 必要なパッケージをインストールする
+
+依存パッケージをインストールします。別のターミナルを開いて以下を実行してください。
+
+```bash
+npm install
+```
+
+## docker commands
+docker-composeを使うことでidを指定せずターミナルの開いている場所の`docker-compose.yml`ファイルのdockerを操れる。
+### 状態を確認
+```
+docker-compose ps
+```
+
+### 再起動
+```bash
+docker-compose restart
+```
+### 開始
+
+```bash
+docker-compose start
+```
+
+### 停止
+
+```bash
+docker-compose stop
+```
+
+# dockerを使わないなら
 
 - 📖 [Remix docs](https://remix.run/docs)
 
