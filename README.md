@@ -136,10 +136,10 @@ exit
 SHOW GRANTS FOR 'rejume_user'@'%';
 ```
 
-## Prisma操作
+# Prisma操作
 Prisma.clientを使用したMySQLデータ操作
 
-### データの作成 (Create)
+## データの作成 (Create)
 
 ```bash
 // 単一のレコードを作成
@@ -159,12 +159,12 @@ const createManyUsers = await prisma.user.createMany({
   skipDuplicates: true, // 重複エントリをスキップ
 });
 ```
-#### 引数の説明:
+### 引数の説明:
     data: 作成するレコードのデータ
 
     skipDuplicates: 重複するエントリをスキップするかどうか（createManyの場合）
 
-### データの読み取り (Read)
+## データの読み取り (Read)
 
 ```bash
 // 全てのレコードを取得
@@ -187,7 +187,7 @@ const filteredUsers = await prisma.user.findMany({
 });
 ```
 
-#### 引数の説明:
+### 引数の説明:
 
     where: 検索条件を指定
 
@@ -195,7 +195,7 @@ const filteredUsers = await prisma.user.findMany({
 
     select: 取得するフィールドを指定
 
-### データの更新 (Update)
+## データの更新 (Update)
 
 ```bash
 // 単一のレコードを更新
@@ -221,13 +221,13 @@ const updateManyUsers = await prisma.user.updateMany({
 });
 ```
 
-#### 引数の説明:
+### 引数の説明:
 
     where: 更新対象のレコードを指定する条件
 
     data: 更新するデータ
 
-### データの削除 (Delete)
+## データの削除 (Delete)
 
 ```bash
 // 単一のレコードを削除
@@ -245,11 +245,11 @@ const deleteManyUsers = await prisma.user.deleteMany({
 });
 ```
 
-#### 引数の説明:
+### 引数の説明:
 
     where: 削除対象のレコードを指定する条件
 
-### 注意事項
+## 注意事項
 
     これらの操作を実行する前に、Prisma Clientのインスタンスを作成する必要があります:
 
@@ -261,3 +261,10 @@ const prisma = new PrismaClient()
     非同期操作のため、async/awaitを使用するか、Promiseとして扱う必要があります。
 
     エラーハンドリングを適切に行い、データベース接続を適切に閉じることを忘れないでください。
+
+# Git操作
+　一つの作業につき、ひとつブランチを作ってその中で作業をしてください。
+
+操作一覧参考情報
+https://qiita.com/KiYuRo/items/3bcf097772022f9d7245
+https://qiita.com/Nagao-S/items/cb6fe328d6351c90a166
