@@ -5,7 +5,7 @@ COPY package*.json ./
 RUN npm install --production
 RUN rm -rf node_modules/.cache
 COPY . .
-RUN npm install @prisma/client bcryptjs @types/bcryptjs ws @remix-run/dev
+RUN npm install @prisma/client bcryptjs @types/bcryptjs ws @remix-run/dev jsdoc
 RUN npm run build
 
 # 実行ステージ
