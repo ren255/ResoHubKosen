@@ -135,3 +135,129 @@ exit
 ```bash
 SHOW GRANTS FOR 'rejume_user'@'%';
 ```
+
+## Prisma操作
+Prisma.clientを使用したMySQLデータ操作
+
+### データの作成 (Create)
+
+```bash
+// 単一のレコードを作成
+const createUser = await prisma.user.create({
+  data: {
+    name: "Alice",
+    email: "alice@example.com",
+  },
+});
+
+// 複数のレコードを一度に作成
+const createManyUsers = await prisma.user.createMany({
+  data: [
+    { name: "Bob", email: "bob@example.com" },
+    { name: "Charlie", email: "charlie@example.com" },
+  ],
+  skipDuplicates: true, // 重複エントリをスキップ
+});
+```
+#### 引数の説明:
+    data: 作成するレコードのデータ
+
+    skipDuplicates: 重複するエントリをスキップするかどうか（createManyの場合）
+
+### データの読み取り (Read)
+
+```bash
+// 全てのレコードを取得
+const allUsers = await prisma.user.findMany();
+
+// 条件に合致する単一のレコードを取得
+const user = await prisma.user.findUnique({
+  where: {
+    email: "alice@example.com",
+  },
+});
+
+// 条件に合致する複数のレコードを取得
+const filteredUsers = await prisma.user.findMany({
+  where: {
+    name: {
+      startsWith: "A",
+    },
+  },
+});
+```
+
+#### 引数の説明:
+
+    where: 検索条件を指定
+
+    include: 関連するモデルのデータを含めるかどうかを指定
+
+    select: 取得するフィールドを指定
+
+### データの更新 (Update)
+
+```bash
+// 単一のレコードを更新
+const updateUser = await prisma.user.update({
+  where: {
+    email: "alice@example.com",
+  },
+  data: {
+    name: "Alicia",
+  },
+});
+
+// 条件に合致する複数のレコードを更新
+const updateManyUsers = await prisma.user.updateMany({
+  where: {
+    name: {
+      startsWith: "A",
+    },
+  },
+  data: {
+    role: "ADMIN",
+  },
+});
+```
+
+#### 引数の説明:
+
+    where: 更新対象のレコードを指定する条件
+
+    data: 更新するデータ
+
+### データの削除 (Delete)
+
+```bash
+// 単一のレコードを削除
+const deleteUser = await prisma.user.delete({
+  where: {
+    email: "alice@example.com",
+  },
+});
+
+// 条件に合致する複数のレコードを削除
+const deleteManyUsers = await prisma.user.deleteMany({
+  where: {
+    role: "USER",
+  },
+});
+```
+
+#### 引数の説明:
+
+    where: 削除対象のレコードを指定する条件
+
+### 注意事項
+
+    これらの操作を実行する前に、Prisma Clientのインスタンスを作成する必要があります:
+
+```bash
+import { PrismaClient } from '@prisma/client'
+const prisma = new PrismaClient()
+```
+
+    非同期操作のため、async/awaitを使用するか、Promiseとして扱う必要があります。
+
+    エラーハンドリングを適切に行い、データベース接続を適切に閉じることを忘れないでください。
