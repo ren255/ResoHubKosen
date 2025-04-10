@@ -9,6 +9,11 @@ declare module "@remix-run/node" {
 }
 
 export default defineConfig({
+  server: {
+    watch: {
+      usePolling: true, // ファイル変更検知にPollingモードを有効化
+    },
+  },
   plugins: [
     remix({
       future: {

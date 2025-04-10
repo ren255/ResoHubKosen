@@ -8,6 +8,11 @@
 ![MySQL](https://img.shields.io/badge/-MySQL-4479A1.svg?logo=mysql&style=flat&logoColor=white)
 ![Docker](https://img.shields.io/badge/-Docker-2496ED.svg?logo=docker&style=flat&logoColor=white)
 
+```bash
+site: http://localhost:3000/
+
+```
+
 # 初回起動方法
 
 ### 1. Dockerコンテナを立ち上げる
