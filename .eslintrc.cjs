@@ -21,9 +21,25 @@ module.exports = {
   },
   ignorePatterns: ["!**/.server", "!**/.client"],
 
-  // Base config
-  extends: ["eslint:recommended"],
+  settings: {
+    "import/resolver": {
+      alias: {
+        map: [
+          ["@", "./src"],
+          ["~", "./app"]
+        ],
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
+      },
+      node: {
+        extensions: [".ts", ".tsx", ".js", ".jsx"]
+      },
+      typescript: {
+        alwaysTryTypes: true
+      }
+    }
+  },
 
+  extends: ["eslint:recommended"],
   overrides: [
     // React
     {
@@ -64,6 +80,13 @@ module.exports = {
           typescript: {
             alwaysTryTypes: true,
           },
+          alias: {
+            map: [
+              ["@", "./src"],
+              ["~", "./app"]
+            ],
+            extensions: [".ts", ".tsx", ".js", ".jsx"]
+          }
         },
       },
       extends: [
