@@ -1,0 +1,159 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  Int      @id @default(autoincrement())
+  real_name           String
+  username            String   @unique
+  student_number      String?  @unique
+  gmail_address       String?  @unique
+  school_mail_address String?  @unique
+  user_type           UserType
+  is_verified         Boolean  @default(false)
+  grade               Int?
+  department          String?
+  bio                 String?
+  profile_image       String?
+  created_at          DateTime @default(now())
+  updated_at          DateTime @updatedAt
+  last_login_at       DateTime @default(now())
+  following_count     Int      @default(0)
+  followers_count     Int      @default(0)
+
+  contents  Content[]
+  likes     Like[]
+  comments  Comment[]
+  following Follow[]  @relation("FollowingRelation")
+  followers Follow[]  @relation("FollowersRelation")
+}
+
+enum UserType {
+  Teacher
+  Student
+  Alumni
+}
+
+model Content {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  category    Category
+  course_id   Int
+  description String?
+  file_id     Int
+
+  views            Int      @default(0)
+  uniqueViews      Int      @default(0)
+  downloads        Int      @default(0)
+  likes            Int      @default(0)
+  visibility_scope String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+
+  tags     ContentTag[]
+  comments Comment[]
+  likedBy  Like[]
+
+  file   File    @relation(fields: [file_id], references: [id])
+  user   User    @relation(fields: [user_id], references: [id])
+  Course Course? @relation(fields: [course_id], references: [id])
+}
+
+enum Category {
+  PastExam
+  FlashCard
+  Note
+  Other
+}
+
+model Course {
+  id                    Int      @id @default(autoincrement())
+  course_admission_year Int
+  course_grade          Int
+  course_subject        String
+  course_teacher        String?
+  created_at            DateTime @default(now())
+  updated_at            DateTime @updatedAt
+
+  contents Content[]
+}
+
+model Tag {
+  id       Int          @id @default(autoincrement())
+  name     String       @unique
+  contents ContentTag[]
+}
+
+model ContentTag {
+  id         Int @id @default(autoincrement())
+  content_id Int
+  tag_id     Int
+
+  content Content @relation(fields: [content_id], references: [id])
+  tag     Tag     @relation(fields: [tag_id], references: [id])
+}
+
+model Follow {
+  id          Int      @id @default(autoincrement())
+  follower_id Int
+  followed_id Int
+  created_at  DateTime @default(now())
+
+  follower User @relation("FollowingRelation", fields: [follower_id], references: [id])
+  followed User @relation("FollowersRelation", fields: [followed_id], references: [id])
+}
+
+model Like {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  content_id Int
+  created_at DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [id])
+  content Content @relation(fields: [content_id], references: [id])
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  content_id Int
+  text       String
+  created_at DateTime @default(now())
+
+  user    User    @relation(fields: [user_id], references: [id])
+  content Content @relation(fields: [content_id], references: [id])
+}
+
+model File {
+  id         Int      @id @default(autoincrement())
+  file_type  FileType
+  file_path  String
+  file_name  String
+  extension  String
+  size       Int?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  contents Content[]
+}
+
+enum FileType {
+  Folder
+  Image
+  Document
+  PDF           // PDFファイル
+  Text
+  Spreadsheet 
+  Flashcard     // フラッシュカード (例: Anki)
+  Presentation  // プレゼンテーション (例: PowerPoint)
+  Audio
+  Video
+  Archive       // 圧縮ファイル (例: ZIP, RAR)
+  Code          // ソースコードファイル (例: .js, .py, .java)
+  Executable    // 実行可能ファイル (例: EXE, APP)
+}
