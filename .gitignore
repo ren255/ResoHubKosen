@@ -1,0 +1,5 @@
+docker/db/mysql.sock
+.env
+/docker/db
+!/docker/db/README.md
+node_modules
